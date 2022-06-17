@@ -3,29 +3,63 @@ import React, { useState } from "react";
 import Navbar from "../components/navbar";
 import "./styles.scss";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Register() {
   let navigate = useNavigate();
 
-  const [username, setUsername] = useState();
+  const [name, setName] = useState();
   const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
+  const [email, setEmail ]= useState();
+  const [phone, setPhone ]= useState();
+
+
+  // const [confirmPassword, setConfirmPassword] = useState();
 
   const handleChange = (val, field) => {
-    if (field === "username") {
-      setUsername(val);
+    if (field === "name") {
+      setName(val);
     }
     if (field === "password") {
       setPassword(val);
-    } else {
-      setConfirmPassword(val);
-      console.log("CONFIRMPASSWORD:", val);
-    }
+    } 
+    if (field === "email") {
+      setEmail(val);}
+      if (field === "phone") {
+        setPhone(val);}
   };
   const handleOnRegister = () => {
     alert("tạo tài khoản thành công");
     navigate("/login");
   };
+  const hanldeRegister=()=>{
+    const url='https://lap-center.herokuapp.com/api/register'
+    // if(name===fakeAccount.name && password===fakeAccount.password){
+    //   console.log("DANG NHAP THANH CONG!");
+    //   navigate('/')
+
+    // }
+    // else{
+    //   console.log("DANG NHAP KHONG THANH CONG!")
+    //   alert("Tên tài khoản hoặc mật khẩu không chính xác. vui lòng thử lại!!!")
+    // }
+    axios.post(url  , {
+      name: name,
+      email:email,
+      phone:phone,
+      password: password
+    })
+    .then(function (response) {
+      console.log("SUCCESS:",response.data);
+      navigate('/login')
+
+    })
+    .catch(function (error) {
+      console.log("ERROR:",error);
+      alert("Lỗi đăng kí, vui lòng thử lại!!!")
+
+    });
+  }
   return (
     <div className="registerContainer">
       <Navbar />
@@ -38,14 +72,32 @@ export default function Register() {
             controlId="formPlaintextEmail"
           >
             <Form.Label column sm="2" className="mx">
-              Username
+              Customer Name
             </Form.Label>
             <Col sm="9">
               <Form.Control
                 type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => handleChange(e.target.value, "username")}
+                placeholder="Customer Name"
+                value={name}
+                onChange={(e) => handleChange(e.target.value, "name")}
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group
+            as={Row}
+            className="mb-3 d-flex justify-content-between"
+            controlId="formPlaintextEmail"
+          >
+            <Form.Label column sm="2" className="mx">
+              Email
+            </Form.Label>
+            <Col sm="9">
+              <Form.Control
+                type="text"
+                placeholder=" Email"
+                value={email}
+                onChange={(e) => handleChange(e.target.value, "email")}
               />
             </Col>
           </Form.Group>
@@ -56,14 +108,14 @@ export default function Register() {
             controlId="formPlaintextPassword"
           >
             <Form.Label column sm="2">
-              Password
+              phone
             </Form.Label>
             <Col sm="9">
               <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => handleChange(e.target.value, "password")}
+                type="text"
+                placeholder="Phone"
+                value={phone}
+                onChange={(e) => handleChange(e.target.value, "phone")}
               />
             </Col>
           </Form.Group>
@@ -73,15 +125,15 @@ export default function Register() {
             controlId="formPlaintextPassword"
           >
             <Form.Label column sm="2">
-              Confirm Password
+             Password
             </Form.Label>
             <Col sm="9">
               <Form.Control
                 type="password"
                 placeholder="Password"
-                value={confirmPassword}
+                value={password}
                 onChange={(e) =>
-                  handleChange(e.target.value, "confirmPassword")
+                  handleChange(e.target.value, "password")
                 }
               />
             </Col>
@@ -90,7 +142,7 @@ export default function Register() {
             <Button
               variant="secondary"
               className="DK"
-              onClick={handleOnRegister}
+              onClick={hanldeRegister}
             >
               Đăng Ký
             </Button>{" "}
