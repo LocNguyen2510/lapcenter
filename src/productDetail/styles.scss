@@ -1,0 +1,50 @@
+.ProductDetailContainer{
+    width: 100%;
+    margin: 0 auto;
+
+    .content{
+        width: 80%;
+        margin: 0 auto;
+    
+        .title{
+            margin-top: 20px;
+    }
+    .info{
+        .productImg{
+            .imagesSmall{
+                width: 50px;
+                height: 45px;
+                border:  1px solid ;
+            }
+        }
+        .price1{
+            color: rgb(41, 52, 169);
+        }
+    
+        .price2{
+            color: red;
+            font-size: 25px;
+            font-weight: 700;
+        }
+        .discount{
+            background-color: rgb(38, 104, 162);
+            color: antiquewhite;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 13px 5px;
+        }
+        .discountInfo{
+            border: 2px dotted black;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 13px 5px;
+        }
+    }
+    .contact{
+        ul li{
+            color: black;
+        }
+    }
+    }
+   
+}

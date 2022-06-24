@@ -1,6 +1,8 @@
 import reportWebVitals from './reportWebVitals';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import ProductDetail from './productDetail';
+import Footer from './footer';
 import {
   BrowserRouter,
   Routes,
@@ -20,6 +22,9 @@ root.render(
         <Route path="about" element={<About />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="productDetail" element={<ProductDetail />} />
+       
+
 
       </Routes>
     </BrowserRouter>
