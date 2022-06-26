@@ -22,7 +22,7 @@ export default function Login() {
     }
   };
   const hanldeLogin=()=>{
-    const url='https://lap-center.herokuapp.com/api/login'
+    const url='https://lap-center-v1.herokuapp.com/api/login'
     // if(username===fakeAccount.username && password===fakeAccount.password){
     //   console.log("DANG NHAP THANH CONG!");
     //   navigate('/')

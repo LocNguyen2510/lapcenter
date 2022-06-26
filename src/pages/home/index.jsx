@@ -37,7 +37,7 @@ export default function Home() {
 
   const fetchAxios = () => {
     axios
-      .get("https://lap-center.herokuapp.com/api/product")
+      .get("https://lap-center-v1.herokuapp.com/api/product")
       .then(function (response) {
         // handle success
         console.log("SUCCESS:", response.data);
