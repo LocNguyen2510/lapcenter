@@ -9,10 +9,36 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import ViewCard from "../components/viewCard";
 // import { useEffect, useState } from "react";
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 4
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1
+  }
+};
+
 export default function ProductDetail() {
   const { state } = useLocation();
   const[product,setProduct]=useState();
-  console.log("STATE:", state);
+  const[image,setImage]=useState('');
+
+  const[productsBrand,setProductsBrand]=useState();
+
+  console.log("productId", state.id);
+  console.log("productBrand:", state.brand);
+
   const getProductId = () => {
     axios
       .get(
@@ -20,34 +46,38 @@ export default function ProductDetail() {
       )
       .then(function (response) {
         // handle success
-        console.log("SUCCESS:", response.data.response);
-        setProduct(response.data.response)
+        const data=response.data.response
+        console.log("SUCCESS:", data);
+        setProduct(data)
+        setImage(data.images[0])
       })
       .catch(function (error) {
         // handle error
         console.error("ERROR:", error);
       });
   };
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
+
+ const getProductsBrand= () => {
+    axios
+      .get("https://lap-center.herokuapp.com/api/product", {
+        params: {
+          productBrand: state.brand,
+        },
+      })
+      .then(function (response) {
+        // handle success
+        console.log("SUCCESS 111111:", response.data);
+        setProductsBrand(response.data.products);
+      })
+      .catch(function (error) {
+        console.error("ERROR:", error);
+      });
   };
-  useEffect(() => {getProductId()}, []);
+  
+  useEffect(() => {
+    getProductId()
+    getProductsBrand()
+  }, []);
   return (
     <div className="ProductDetailContainer">
       <Navbar />
@@ -61,18 +91,22 @@ export default function ProductDetail() {
             <div className="info row">
               <div className="productImg col">
                 <img
-                  src="https://philong.com.vn/media/product/24366-5.jpg"
+                  src={image}
                   alt=""
                   className="images"
-                />
-                <div className="text-center">
+                /> <div className="text-center ">
+                {
+                  product?.images.length > 0 && product?.images.map((item,idx)=>(
+                    
                   <img
-                    src="https://philong.com.vn/media/product/24366-5.jpg"
+                    src={item}
                     alt=""
-                    className="imagesSmall "
+                    className="imagesSmall mx-2" key={idx} onClick={()=>setImage(item)}
                   />
+                  ))
+                }
                 </div>
-              </div>
+                </div>
 
               <div className="price col">
                 <span className="price1">Giá bán:</span>{" "}
@@ -135,12 +169,10 @@ export default function ProductDetail() {
     
         </div>
       </div>
-      <Carousel responsive={responsive}>
-  <ViewCard product={product}/>
-  <div>Item 1</div>
-  <div>Item 2</div>
-  <div>Item 3</div>
-  <div>Item 4</div>
+      <Carousel responsive={responsive}>{productsBrand?.length > 0 && productsBrand?.map((item,index) => <ViewCard product={item} key={index}/> )}
+
+  
+
 </Carousel>;
       <Footer />
     </div>
