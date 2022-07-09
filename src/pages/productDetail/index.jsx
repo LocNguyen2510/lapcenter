@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/navbar";
+import Navbar from "../../components/navbar";
 import "./styles.scss";
 import { Button } from "react-bootstrap";
-import Footer from "../footer";
+import Footer from "../../footer";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import ViewCard from "../components/viewCard";
+import ViewCard from "../../components/viewCard";
 // import { useEffect, useState } from "react";
 const responsive = {
   superLargeDesktop: {

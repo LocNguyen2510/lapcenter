@@ -3,16 +3,15 @@ import Navbar from "../../components/navbar";
 import axios from "axios";
 import Card from "../../components/card";
 import { data } from "../../data";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Spinner } from "react-bootstrap";
 import "./styles.scss";
 export default function Home() {
   const [list, setList] = useState([]);
   const [search, setSearch] = useState("");
   const [user, setUser] = useState([]);
   const [brand, setBrand] = useState("");
-
   const [price, setPrice] = useState(0);
-
+  const[loading,setLoading]=useState(true);
   useEffect(() => {
     console.log("ham nay chay dau tien");
     fetchAxios();
@@ -36,16 +35,20 @@ export default function Home() {
   };
 
   const fetchAxios = () => {
+    setLoading(true)
     axios
       .get("https://lap-center-v1.herokuapp.com/api/product")
       .then(function (response) {
         // handle success
         console.log("SUCCESS:", response.data);
+        setLoading(false)
         setList(response.data.products);
       })
       .catch(function (error) {
         // handle error
         console.error("ERROR:", error);
+        setLoading(false)
+        alert("Something went wrong!!!")
       });
   };
 
@@ -147,6 +150,7 @@ export default function Home() {
     // });
   };
   const handleCallApi = (productName, productBrand, productPrice) => {
+    setLoading(true)
     axios
       .get("https://lap-center.herokuapp.com/api/product", {
         params: {
@@ -159,9 +163,12 @@ export default function Home() {
       .then(function (response) {
         // handle success
         console.log("SUCCESS:", response.data);
+        setLoading(false)
         setList(response.data.products);
       })
       .catch(function (error) {
+        setLoading(false)
+        alert("Something went wrong!!!")
         // handle error
         console.error("ERROR:", error);
       });
@@ -171,9 +178,9 @@ export default function Home() {
     <div className="homecontainer">
       <Navbar />
       <div className="content">
-        <div className="menu_left">
-          <Form.Label htmlFor="inputPassword5">tim kiem san pham</Form.Label>
-          <div className="d-flex">
+        <div className="menu_top">
+          <Form.Label htmlFor="inputPassword5"></Form.Label>
+          <div className="inpsearch d-flex">
             <Form.Control
               type="text"
               id="inputPassword5"
@@ -183,18 +190,24 @@ export default function Home() {
               }}
               aria-describedby="passwordHelpBlock"
             />
-            <Button variant="primary" onClick={onSubmitSearch}>
-              Search
+            <Button
+              className="btnsearch"
+              variant="primary"
+              onClick={onSubmitSearch}
+            >
+              Tìm kiếm
             </Button>
           </div>
           <div className="selectForm d-flex">
-            <p>Hãng</p>
+            <p className="txtFilter">Hãng:</p>
             <select
-              className="selectBox  "
+              className="selectBox"
               value={brand}
               onChange={handleSelectChange}
             >
-              <option selected value=""></option>
+              <option selected value="">
+                Tất Cả
+              </option>
               <option value="Asus">ASUS</option>
               <option value="Dell">DELL</option>
               <option value="Acer">ACER</option>
@@ -202,18 +215,26 @@ export default function Home() {
             </select>
           </div>
           <div className="selectForm d-flex">
-            <p>Giá</p>
+            <p className="txtFilter ">Giá:</p>
             <select className="selectBox" value={price} onChange={sortPrice}>
-              <option selected value=""></option>
+              <option selected value="">
+                Tất Cả
+              </option>
               <option value="asc">Từ thấp đến cao</option>
               <option value="desc">Từ cao đến thấp</option>
             </select>
           </div>
         </div>
+       
         <div className="d-flex flex-wrap list_product">
-          {list.map((item) => (
-            <Card product={item} />
-          ))}
+          {(!loading&& list.length>0)?
+          list.map((item) => <Card product={item}key={item.id} />): 
+          <div className="spin ">  
+          <Spinner animation="grow" variant="danger" />
+          <Spinner animation="grow" variant="warning" />
+          <Spinner animation="grow" variant="info" />
+        </div>
+          }
         </div>
       </div>
     </div>

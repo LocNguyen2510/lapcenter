@@ -1,6 +1,8 @@
 .navbar-container{
     background: lightcoral;
     padding: 20px 10px 10px 10px;
+    position: fixed;
+    width: 100%;
 }
 .title{
     ul li{
@@ -10,6 +12,8 @@
         color: #ffff;
     }
     ul li a {
+        font-weight: 700;
+        font-size: large    ;
         text-decoration: none;
         color: white;
     }

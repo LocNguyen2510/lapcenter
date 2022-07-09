@@ -1,7 +1,7 @@
 import reportWebVitals from './reportWebVitals';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import ProductDetail from './productDetail';
+import ProductDetail from './pages/productDetail';
 import {
   BrowserRouter,
   Routes,

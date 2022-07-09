@@ -1,13 +1,45 @@
-.homecontainer{
-    width: 100%;
-    .content{
-        display: flex;
-    }
-    .menu_left{
-        width: 20%;
+.homecontainer {
+  width: 100%;
+  .content {
+      padding-top: 65px;
+    // display: flex;
+  }
 
+  .menu_top {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: flex;
+    justify-content:space-between;
+    .inpsearch{
+      height: 40px;
     }
-    .list_product{
-        width: 80%;
+
+    .btnsearch {
+      width: 100px;
+      height: 40px;
+      font-size: small;
     }
+    .selectForm {
+      .txtFilter {
+        margin-top: 8px;
+        font-weight: 700;
+      }
+      .selectBox {
+        height: 40px;
+        width: 200px;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .list_product {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+.spin{
+  text-align: center;
+  margin-left: 550px;
+  margin-top: 250px;
 }
