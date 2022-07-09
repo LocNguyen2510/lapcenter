@@ -6,12 +6,12 @@ import './styles.scss'
 export default function Card({product}) {
   const navigate=useNavigate();
   return (
-    <div className="card-product">
+    <div className="card-product" title={product.name}>
       {/* <div className="img"> */}
         <img src={product.images[0]} alt="" className="img" />
       {/* </div> */}
       <div className="info-product">
-        <h5>{product.name}</h5>
+        <h5 className="name">{product.name}</h5>
         <p>Hang:{product.brand}</p>
         <p>{product.cpu}</p>
         <p>Gia:{product.price}</p>
