@@ -4,6 +4,7 @@ import axios from "axios";
 import Card from "../../components/card";
 import { data } from "../../data";
 import { Form, Button, Spinner } from "react-bootstrap";
+import ReactPaginate from 'react-paginate';
 import "./styles.scss";
 export default function Home() {
   const [list, setList] = useState([]);
@@ -237,6 +238,20 @@ export default function Home() {
           }
         </div>
       </div>
+      <div className="pagination">
+              <ReactPaginate
+                  previousLabel={"<"}
+                  nextLabel={">"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={12}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={(e)=> console.log("EEE:",e.selected+1)}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}/>
+          </div>
     </div>
   );
 }

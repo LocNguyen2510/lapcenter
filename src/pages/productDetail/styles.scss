@@ -1,13 +1,16 @@
 .ProductDetailContainer{
-    width: 100%;
-    margin: 0 auto;
-
+    padding-top: 75px;
+   
+    .spin{
+        text-align: center;
+        margin-left: -70px;
+     
+      }
     .content{
         width: 80%;
-        margin: 0 auto;
-    
+        margin-left: 10%;
         .title{
-            margin-top: 20px;
+            
     }
     .info{
         .productImg{
