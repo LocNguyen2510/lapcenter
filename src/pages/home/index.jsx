@@ -4,7 +4,7 @@ import axios from "axios";
 import Card from "../../components/card";
 import { data } from "../../data";
 import { Form, Button, Spinner } from "react-bootstrap";
-import ReactPaginate from 'react-paginate';
+import ReactPaginate from "react-paginate";
 import "./styles.scss";
 export default function Home() {
   const [list, setList] = useState([]);
@@ -12,7 +12,10 @@ export default function Home() {
   const [user, setUser] = useState([]);
   const [brand, setBrand] = useState("");
   const [price, setPrice] = useState(0);
-  const[loading,setLoading]=useState(true);
+  const [loading, setLoading] = useState(true);
+  const [totalPage, setTotalPage] = useState(0);
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
     console.log("ham nay chay dau tien");
     fetchAxios();
@@ -36,20 +39,23 @@ export default function Home() {
   };
 
   const fetchAxios = () => {
-    setLoading(true)
+    setLoading(true);
     axios
-      .get("https://lap-center-v1.herokuapp.com/api/product")
+      .get(
+        "https://lap-center.herokuapp.com/api/product?pageSize=6&pageNumber=1"
+      )
       .then(function (response) {
         // handle success
         console.log("SUCCESS:", response.data);
-        setLoading(false)
+        setLoading(false);
         setList(response.data.products);
+        setTotalPage(response.data.totalPage);
       })
       .catch(function (error) {
         // handle error
         console.error("ERROR:", error);
-        setLoading(false)
-        alert("Something went wrong!!!")
+        setLoading(false);
+        alert("Something went wrong!!!");
       });
   };
 
@@ -97,25 +103,25 @@ export default function Home() {
     setBrand(val);
     handleCallApi(search, val, price);
 
-    // axios
-    // .get("https://lap-center.herokuapp.com/api/product",{
-    //   params: {
-    //     productName: search,
-    //     productBrand: val,
-    //     orderByColumn:'price',
-    //     orderByDirection: price
-
-    //   }
-    // })
-    // .then(function (response) {
-    //   // handle success
-    //   console.log("SUCCESS:", response.data);
-    //   setList(response.data.products)
-    // })
-    // .catch(function (error) {
-    //   // handle error
-    //   console.error("ERROR:", error);
-    // });
+    axios
+      .get("https://lap-center.herokuapp.com/api/product", {
+        params: {
+          productName: search,
+          productBrand: val,
+          orderByColumn: "price",
+          orderByDirection: price,
+         
+        },
+      })
+      .then(function (response) {
+        // handle success
+        console.log("SUCCESS:", response.data);
+        setList(response.data.products);
+      })
+      .catch(function (error) {
+        // handle error
+        console.error("ERROR:", error);
+      });
   };
 
   const sortPrice = (e) => {
@@ -151,7 +157,7 @@ export default function Home() {
     // });
   };
   const handleCallApi = (productName, productBrand, productPrice) => {
-    setLoading(true)
+    setLoading(true);
     axios
       .get("https://lap-center.herokuapp.com/api/product", {
         params: {
@@ -159,19 +165,44 @@ export default function Home() {
           productBrand: productBrand,
           orderByColumn: "price",
           orderByDirection: productPrice,
+          pageSize: 6,
+          pageNumber: page,
         },
       })
       .then(function (response) {
         // handle success
         console.log("SUCCESS:", response.data);
-        setLoading(false)
+        setLoading(false);
         setList(response.data.products);
       })
       .catch(function (error) {
-        setLoading(false)
-        alert("Something went wrong!!!")
+        setLoading(false);
+        alert("Something went wrong!!!");
         // handle error
         console.error("ERROR:", error);
+      });
+  };
+  const handleChangePage = (pageNumber) => {
+    console.log("PAGE NUMBER ", pageNumber);
+    setPage(pageNumber);
+    console.log("PAGE NUMBER ", pageNumber);
+    setLoading(true);
+    axios
+      .get(
+        `https://lap-center.herokuapp.com/api/product?pageSize=6&pageNumber=${pageNumber}`
+      )
+      .then(function (response) {
+        // handle success
+        console.log("SUCCESS:", response.data);
+        setLoading(false);
+        setList(response.data.products);
+        setTotalPage(response.data.totalPage);
+      })
+      .catch(function (error) {
+        // handle error
+        console.error("ERROR:", error);
+        setLoading(false);
+        alert("Something went wrong!!!");
       });
   };
   // }
@@ -226,32 +257,34 @@ export default function Home() {
             </select>
           </div>
         </div>
-       
+
         <div className="d-flex flex-wrap list_product">
-          {(!loading&& list.length>0)?
-          list.map((item) => <Card product={item}key={item.id} />): 
-          <div className="spin ">  
-          <Spinner animation="grow" variant="danger" />
-          <Spinner animation="grow" variant="warning" />
-          <Spinner animation="grow" variant="info" />
-        </div>
-          }
+          {!loading && list.length > 0 ? (
+            list.map((item) => <Card product={item} key={item.id} />)
+          ) : (
+            <div className="spin ">
+              <Spinner animation="grow" variant="danger" />
+              <Spinner animation="grow" variant="warning" />
+              <Spinner animation="grow" variant="info" />
+            </div>
+          )}
         </div>
       </div>
       <div className="pagination">
-              <ReactPaginate
-                  previousLabel={"<"}
-                  nextLabel={">"}
-                  breakLabel={"..."}
-                  breakClassName={"break-me"}
-                  pageCount={12}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={(e)=> console.log("EEE:",e.selected+1)}
-                  containerClassName={"pagination"}
-                  subContainerClassName={"pages pagination"}
-                  activeClassName={"active"}/>
-          </div>
+        <ReactPaginate
+          previousLabel={"<"}
+          nextLabel={">"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={totalPage}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={(e) => handleChangePage(e.selected + 1)}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+        />
+      </div>
     </div>
   );
 }
