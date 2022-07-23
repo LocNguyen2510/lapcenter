@@ -4,10 +4,11 @@ import Navbar from "../../components/navbar";
 import axios from "axios";
 import "./styles.scss";
 import { useNavigate } from "react-router-dom";
+import iconHome from "../../assets/imgs/iconHome.png"
+
 const fakeAccount={username:"admin",password:"admin"}
 export default function Login() {
   let navigate = useNavigate();
-
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const handleChange = (val, field) => {
@@ -45,6 +46,9 @@ export default function Login() {
       })
       .then(function (response) {
         console.log("SUCCESS:", response.data);
+        localStorage.setItem('customerName', response.data.userName)
+        localStorage.setItem('accessToken', response.data.token)
+        localStorage.setItem('userId', response.data.userId)
         navigate("/");
       })
       .catch(function (error) {
@@ -56,7 +60,8 @@ export default function Login() {
   };
     return (
     <div className="loginContainer">
-      <Navbar />
+      {/* <Navbar /> */}
+      <img src={iconHome} alt="" className='iconHome' width={45} height={45} title='Trang Chủ' onClick={()=> navigate('/')} />
       <div className="formLogin">
         <Form>
           <h2> ĐĂNG NHẬP</h2>
@@ -65,10 +70,10 @@ export default function Login() {
             className="mb-3 d-flex justify-content-between"
             controlId="formPlaintextEmail"
           >
-            <Form.Label column sm="2" className="mx">
-              Username
+            <Col sm="12">
+            <Form.Label >
+              Tên hoặc Số Điện Thoại:
             </Form.Label>
-            <Col sm="9">
               <Form.Control
                 type="text"
                 placeholder="Username"
@@ -83,10 +88,10 @@ export default function Login() {
             className="mb-3  d-flex justify-content-between"
             controlId="formPlaintextPassword"
           >
-            <Form.Label column sm="2">
-              Password
+            <Col sm="12">
+            <Form.Label >
+              Mật Khẩu:
             </Form.Label>
-            <Col sm="9">
               <Form.Control
                 type="password"
                 placeholder="Password"

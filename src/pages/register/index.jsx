@@ -1,9 +1,11 @@
 import { Form, Col, Row, Button } from "react-bootstrap";
 import React, { useState } from "react";
-import Navbar from "../components/navbar";
+import Navbar from "../../components/navbar";
 import "./styles.scss";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import iconHome from "../../assets/imgs/iconHome.png"
+
 
 export default function Register() {
   let navigate = useNavigate();
@@ -62,7 +64,8 @@ export default function Register() {
   }
   return (
     <div className="registerContainer">
-      <Navbar />
+         <img src={iconHome} alt="" className='iconHome' width={45} height={45} title='Trang Chủ' onClick={()=> navigate('/')} />
+      {/* <Navbar /> */}
       <div className="formregister">
         <Form>
           <h2> ĐĂNG KÝ</h2>
@@ -71,7 +74,7 @@ export default function Register() {
             className="mb-3 d-flex justify-content-between"
             controlId="formPlaintextEmail"
           >
-            <Form.Label column sm="2" className="mx">
+            <Form.Label column sm="3" className="mx">
               Customer Name
             </Form.Label>
             <Col sm="9">

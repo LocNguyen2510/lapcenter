@@ -1,16 +1,36 @@
 .loginContainer {
+position: relative;
+  height: 100vh;
+  width: 100vw;
+  background: rgb(9,75,121);
+background: linear-gradient(90deg, rgba(9,75,121,1) 0%, rgba(39,184,184,1) 0%, rgba(0,172,255,1) 100%, rgba(8,85,131,1) 100%, rgba(8,85,131,1) 100%);
+.iconHome{
+  border-radius:20px ;
+}
     .formLogin {
       width: 500px;
       height: auto;
       padding: 50px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       margin: 0 auto;
-      background-color: rgb(53, 192, 192);
-      margin-top: 100px;
-      -webkit-box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000,
-        9px 30px 26px 18px rgba(0, 0, 0, 0);
-      box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000,
-        9px 30px 26px 18px rgba(0, 0, 0, 0);
+      background-color:rgb(235, 235, 235);
+      // margin-top: 100px;
+      // -webkit-box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000,
+      //   9px 30px 26px 18px rgba(0, 0, 0, 0);
+      // box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000,
+      //   9px 30px 26px 18px rgba(0, 0, 0, 0);
       border-radius: 4px;
+      box-shadow:
+  2.7px 2.5px 10px rgba(0, 0, 0, 0.059),
+  6.6px 6.1px 18.1px rgba(0, 0, 0, 0.064),
+  12.4px 11.5px 27px rgba(0, 0, 0, 0.067),
+  22.1px 20.5px 39.5px rgba(0, 0, 0, 0.073),
+  41.4px 38.4px 61.5px rgba(0, 0, 0, 0.086),
+  99px 92px 151px rgba(0, 0, 0, 0.11)
+;
   
       h2 {
         text-align: center;
