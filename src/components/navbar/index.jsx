@@ -9,7 +9,7 @@ export default function Navbar() {
   const accessToken=localStorage.getItem('accessToken')
   const userId=localStorage.getItem('userId')
   return (
-    <div className=" d-flex justify-content-between navbar-container        ">
+    <div className=" d-flex justify-content-between navbar-container">
       <div className="text-danger">TEXT DANGER</div>
       <div className="title">
         <ul className="d-flex">
@@ -19,9 +19,9 @@ export default function Navbar() {
           <div>{ 
           customerName &&
           <>
-          <li onClick={()=>{ localStorage.removeItem('customerName');
-       localStorage.removeItem('accessToken');localStorage.removeItem('userId'); }}> 
-       <Link to="login">Đăng xuất</Link>
+          <li onClick={()=>{localStorage.removeItem('customerName');
+       localStorage.removeItem('accessToken');localStorage.removeItem('userId');}} > 
+       <a href="/">Đăng xuất</a>
        </li>
           </>}
           {
