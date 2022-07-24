@@ -132,7 +132,9 @@ export default function ProductDetail() {
                       <div className="discount">Khuyến mãi - Quà tặng</div>
                       <div className="discountInfo">Thông tin quà tặng</div>
                       <div className="text-center">
-                        <Button className="my-4 bg-danger">MUA NGAY</Button>
+                        <Button className="my-4 bg-danger" 
+                        // onClick={navigate('buyNow')}
+                        >MUA NGAY</Button>
                         <br />
                         <span>GỌI NGAY:</span>
                         <span className="text-danger mx-2 h4">

@@ -2,6 +2,7 @@ import reportWebVitals from './reportWebVitals';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import ProductDetail from './pages/productDetail';
+import Buynow from './pages/buy';
 import {
   BrowserRouter,
   Routes,
@@ -21,6 +22,8 @@ root.render(
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="/product/:productId" element={<ProductDetail />} />
+        <Route path="buynow" element={<Buynow />} />
+
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
