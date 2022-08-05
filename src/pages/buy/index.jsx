@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./styles.scss";
-import { Form, Button, Col, Row } from "react-bootstrap"
+import { Form, Button, Col, Row, Spinner } from "react-bootstrap";
 import axios from "axios";
 import Navbar from "../../components/navbar";
+import { useLocation } from "react-router-dom";
+import Modal from 'react-bootstrap/Modal';
 const Buynow = () => {
+  const [modalShow, setModalShow] = React.useState(false);
+  const{ state }=useLocation();
   const [name, setName] = useState();
   const [address, setAddress] = useState();
   const [email, setEmail] = useState();
@@ -13,7 +17,7 @@ const Buynow = () => {
   const [product, setProduct] = useState();
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(true);
-  const [disable, setDisable]= useState(true);
+  console.log("state ID :" ,state.id);
   const handleChange = (val, field) => {
     if (field === "name") {
       setName(val);
@@ -31,10 +35,10 @@ const Buynow = () => {
 
   const handleChangeQuantity = (val) => {
     const value = parseInt(val);
-if( value <1){
+    if (value < 1) {
       setQuantity(1);
       setTotalPrice(1 * product?.price);
-    }else{
+    } else {
       setQuantity(val);
       setTotalPrice(val * product?.price);
     }
@@ -57,7 +61,7 @@ if( value <1){
     setLoading(true);
     axios
       .get(
-        `https://lap-center-v1.herokuapp.com/api/product/getProductbyId/60c07aaea1364c3894ac0b51`
+        `https://lap-center.herokuapp.com/api/product/getProductById/${state?.id}`
       )
       .then(function (response) {
         // handle success
@@ -74,13 +78,21 @@ if( value <1){
         console.error("ERROR:", error);
       });
   };
-  useEffect(()=>{
+  useEffect(() => {
     getProductId();
-  },[])
+  }, []);
+
+  let checkInfo = false;
+  if (!name || !phone || !email || !address) checkInfo = false;
+  if (name && phone && email && address) checkInfo = true;
 
   return (
     <div className="buyContainer">
+      <div className="navbar1">
       <Navbar />
+      </div>
+        
+      {!loading?(
       <div className="content">
         <span className="text-danger">Để đặt hàng</span>
         <span>
@@ -88,8 +100,8 @@ if( value <1){
           thông tin địa chỉ đúng
         </span>
         <div className="d-flex justify-content-between mt-2">
-          <img src={image} alt="" width={80} height={80} />
-          <p className='h5'>{product?.name}</p>
+          <img src={image} alt="" width={100} height={100} />
+          <p className="h5">{product?.name}</p>
           <div>
             <Button
               variant="outline-info"
@@ -134,7 +146,7 @@ if( value <1){
               controlId="formPlaintextEmail"
             >
               <Form.Label column sm="3" className="mx">
-                Họ Tên Khách Hàng
+                Họ Tên Khách Hàng :
               </Form.Label>
               <Col sm="9">
                 <Form.Control
@@ -152,7 +164,7 @@ if( value <1){
               controlId="formPlaintextEmail"
             >
               <Form.Label column sm="2" className="mx">
-                Email
+                Email :
               </Form.Label>
               <Col sm="9">
                 <Form.Control
@@ -170,7 +182,7 @@ if( value <1){
               controlId="formPlaintextPassword"
             >
               <Form.Label column sm="2">
-                Số Điện Thoại
+                Số Điện Thoại :
               </Form.Label>
               <Col sm="9">
                 <Form.Control
@@ -187,7 +199,7 @@ if( value <1){
               controlId="formPlaintextPassword"
             >
               <Form.Label column sm="2">
-                Địa chỉ
+                Địa chỉ:
               </Form.Label>
               <Col sm="9">
                 <Form.Control
@@ -200,11 +212,13 @@ if( value <1){
                 />
               </Col>
             </Form.Group>
+
             <div className="d-flex justify-content-center mt-4">
               <Button
                 variant="secondary"
                 className="muahang"
-                disabled={disable}
+                disabled={!checkInfo}
+                onClick={()=>setModalShow(true)}
                 //   onClick={hanldeRegister}
               >
                 Mua Hàng
@@ -212,7 +226,56 @@ if( value <1){
             </div>
           </Form>
         </div>
-      </div>
+      </div>):(
+      <div className="spin1">
+      <Spinner animation="grow" variant="danger" />
+      <Spinner animation="grow" variant="warning" />
+      <Spinner animation="grow" variant="info" />
+    </div>)
+        }
+        <Modal
+       show={modalShow}
+       onHide={() => setModalShow(false)}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Xác nhận thông tin
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="d-flex ">
+          <div>
+            <img src={image} alt="" height={200} width={200} />
+
+          </div>
+          <div>
+          <div>
+            <h5>Thông Tin Sản Phẩm</h5>
+            <span className="fw-bold">Tên Sản Phẩm: </span><span>{product?.name}</span>
+           <br />
+            <span>Hãng: </span><span>{product?.brand}</span><br />
+            <span>Số Lượng: </span><span>{product?.price}</span><br />
+            <span>Tổng Tiền: </span><span>{product?.totalprice}</span><br />
+          </div>
+          <div>
+          <h5>Thông Tin Khách Hàng</h5>
+            <span>Tên Khách Hàng: </span><span>{product?.name}</span><br />
+
+            <span>Số Điện Thoại: </span><span>{product?.phone}</span><br />
+            <span>Email: </span><span>{product?.email}</span><br />
+            <span>Địa Chỉ: </span><span>{product?.address}</span>
+          </div>
+          </div>
+        </div>
+   
+      </Modal.Body>
+      <Modal.Footer>
+        <Button   onClick={() => setModalShow(false)}>Close</Button>
+      </Modal.Footer>
+    </Modal>
     </div>
   );
 };
