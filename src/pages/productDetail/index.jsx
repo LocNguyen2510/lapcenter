@@ -3,12 +3,11 @@ import Navbar from "../../components/navbar";
 import "./styles.scss";
 import { Button, Spinner } from "react-bootstrap";
 import Footer from "../../footer";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ViewCard from "../../components/viewCard";
-// import { useEffect, useState } from "react";
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -34,6 +33,7 @@ export default function ProductDetail() {
   const [product, setProduct] = useState();
   const [image, setImage] = useState("");
   const location=useLocation();
+  const navigate= useNavigate();
   const [productsBrand, setProductsBrand] = useState();
   const [loading, setLoading] = useState(true);
   console.log("productId", state.id);
@@ -43,7 +43,7 @@ export default function ProductDetail() {
     setLoading(true);
     axios
       .get(
-        `https://lap-center-v1.herokuapp.com/api/product/getProductbyId/${state.id}`
+        `https://lap-center.herokuapp.com/api/product/getProductById/${state?.id}`
       )
       .then(function (response) {
         // handle success
@@ -133,7 +133,7 @@ export default function ProductDetail() {
                       <div className="discountInfo">Thông tin quà tặng</div>
                       <div className="text-center">
                         <Button className="my-4 bg-danger" 
-                        // onClick={navigate('buyNow')}
+                        onClick={()=>{navigate(`/buy/${product._id}`,{ state: { id: product._id}})}}
                         >MUA NGAY</Button>
                         <br />
                         <span>GỌI NGAY:</span>
