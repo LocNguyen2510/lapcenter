@@ -1,11 +1,12 @@
 .buyContainer{
     width: 100vw;
     height: 100vh;
-    padding-bottom: 50px;
+    margin-top: -20px;
+    .navbar1{
+      display: inline-block;
+    }
 
     .content {
-
-
         padding-top: 70px;
         margin: 0 auto;
         width: 60%;
@@ -20,7 +21,25 @@
         }
         .form{
             margin-top: 40px;
+            border: solid 1px ;
+            border-radius: 4px;
+            padding: 50px;
+            box-shadow:
+            1px 0.9px 2.2px rgba(0, 0, 0, 0.022),
+            2.5px 2.1px 5.3px rgba(0, 0, 0, 0.032),
+            4.6px 3.9px 10px rgba(0, 0, 0, 0.04),
+            8.3px 6.9px 17.9px rgba(0, 0, 0, 0.048),
+            15.5px 13px 33.4px rgba(0, 0, 0, 0.058),
+            37px 31px 80px rgba(0, 0, 0, 0.08)
+          ;
+          
         }
+    }
+    .spin1{
+      text-align: center;
+      margin-left: -70px;
+      margin-top: 400px;
+   
     }
     input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

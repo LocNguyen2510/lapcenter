@@ -35,7 +35,7 @@ export default function Register() {
     navigate("/login");
   };
   const hanldeRegister=()=>{
-    const url='https://lap-center-v1.herokuapp.com/api/register'
+    const url='https://lap-center.herokuapp.com/api/register'
     // if(name===fakeAccount.name && password===fakeAccount.password){
     //   console.log("DANG NHAP THANH CONG!");
     //   navigate('/')
