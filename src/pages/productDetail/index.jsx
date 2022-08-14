@@ -3,11 +3,13 @@ import Navbar from "../../components/navbar";
 import "./styles.scss";
 import { Button, Spinner } from "react-bootstrap";
 import Footer from "../../footer";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ViewCard from "../../components/viewCard";
+import Modal from "react-bootstrap/Modal";
+
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -29,17 +31,21 @@ const responsive = {
 };
 
 export default function ProductDetail() {
+  const [modalShow, setModalShow] = React.useState(false);
+  const isLogin = localStorage.getItem("customerName");
+  const userId = localStorage.getItem("userId");
   const { state } = useLocation();
   const [product, setProduct] = useState();
   const [image, setImage] = useState("");
-  const location=useLocation();
-  const navigate= useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [productsBrand, setProductsBrand] = useState();
   const [loading, setLoading] = useState(true);
   console.log("productId", state.id);
   console.log("productBrand:", state.brand);
-
-  const getProductId = () => {
+  const [modalConfirm, setModalConfirm] = React.useState(false);
+  const [message, setMessage] = useState();
+  const getProductId = () => {  
     setLoading(true);
     axios
       .get(
@@ -49,14 +55,14 @@ export default function ProductDetail() {
         // handle success
         setLoading(false);
         const data = response.data.response;
-        console.log("SUCCESS:", data);
+        // console.log("SUCCESS:", data);
         setProduct(data);
         setImage(data.images[0]);
       })
       .catch(function (error) {
         setLoading(false);
         alert("Something went wrong!!!");
-        console.error("ERROR:", error);
+        // console.error("ERROR:", error);
       });
   };
 
@@ -71,16 +77,40 @@ export default function ProductDetail() {
       .then(function (response) {
         setLoading(false);
         // handle success
-        console.log("SUCCESS 111111:", response.data);
+        // console.log("SUCCESS 111111:", response.data);
         setProductsBrand(response.data.products);
       })
       .catch(function (error) {
         setLoading(false);
         alert("Something went wrong!!!");
-        console.error("ERROR:", error);
+        // console.error("ERROR:", error);
       });
   };
-
+  const handleAddCarts = () => {
+    setLoading(true);
+    axios
+      .post("https://lap-center-v1.herokuapp.com/api/cart/addProductToCart", {
+        userId: userId,
+        productId: product._id,
+        productName:product.name,
+        productBrand: product.brand,
+        image:image,
+        price: product.price,
+      })
+      .then((res) => {
+        console.log("SUCCESS");
+        setModalConfirm(true)
+        setMessage("Thêm vào giỏ hàng thành công");
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("FAIL");
+        setModalConfirm(true)
+        setMessage("Thêm vào giỏ hàng thất bại");
+        setLoading(false);
+      });
+    setModalShow(false);
+  };
   useEffect(() => {
     getProductId();
     getProductsBrand();
@@ -132,9 +162,22 @@ export default function ProductDetail() {
                       <div className="discount">Khuyến mãi - Quà tặng</div>
                       <div className="discountInfo">Thông tin quà tặng</div>
                       <div className="text-center">
-                        <Button className="my-4 bg-danger" 
-                        onClick={()=>{navigate(`/buy/${product._id}`,{ state: { id: product._id}})}}
-                        >MUA NGAY</Button>
+                        <Button
+                          className="my-4 bg-danger"
+                          onClick={() => {
+                            navigate(`/buy/${product._id}`, {
+                              state: { id: product._id },
+                            });
+                          }}
+                        >
+                          MUA NGAY
+                        </Button>
+                        <br />
+                        {isLogin && (
+                          <Button className="my-4 bg-warning" onClick={handleAddCarts}>
+                            Thêm vào giỏ hàng
+                          </Button>
+                        )}
                         <br />
                         <span>GỌI NGAY:</span>
                         <span className="text-danger mx-2 h4">
@@ -206,6 +249,27 @@ export default function ProductDetail() {
           </div>
         )}
       </div>
+      <Modal
+   show={modalConfirm}
+   onHide={() => setModalConfirm(false)}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Thông Báo
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>
+          {message}
+        </p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={()=>{setModalConfirm(false)}}>Close</Button>
+      </Modal.Footer>
+    </Modal>
     </div>
   );
 }
