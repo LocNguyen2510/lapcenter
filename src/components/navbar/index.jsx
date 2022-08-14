@@ -29,8 +29,8 @@ export default function Navbar() {
           </li>
           {
             accessToken ?
-            <li onClick={handleLogout}> <a href="/">Đăng Xuất</a></li>:
-            <li><Link to="login">Đăng Nhập</Link></li>
+            <li onClick={handleLogout}> <a href="">Đăng Xuất</a></li>:
+            <li><Link to="/login">Đăng Nhập</Link></li>
           }
 
           {/* cách 2: */}
