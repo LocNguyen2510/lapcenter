@@ -1,0 +1,66 @@
+.containerMyCarts {
+  padding-top: 75px;
+  width: 80%;
+  margin: 0 auto;
+  .title{
+    text-align: center;
+    padding-bottom: 15px;
+  }
+  .tb-header {
+    max-width: 1228px;
+    min-width: 600px;
+    background: rgb(113, 170, 188) !important;
+    justify-content: space-between;
+    padding: 5px 10px 0 10px;
+    border: solid 1px rgb(128, 120, 120);
+}
+.tbh-img {
+  max-width: 128px;
+  min-width: 100px;
+  text-align: center;
+
+}
+.tbh-name {
+  text-align: center;
+  max-width: 400px;
+  min-width: 300px;
+  
+}
+.tbh-brand {
+  max-width: 230px;
+  min-width: 200;
+}
+.tbh-price {
+  max-width: 230px;
+  min-width: 200px;
+  text-align: center;
+}
+.tbh-actions {
+  max-width: 240px;
+  min-width: 200px;
+  text-align: center;
+}
+.tb-body {
+    max-width: 1228px;
+    min-width: 600px;
+    justify-content: space-between;
+    padding: 5px 10px 0 10px;
+    border: solid 1px rgb(128, 120, 120);
+    
+}
+.tbb-img {
+    width: 90px;
+    height: 70px;
+  }
+}
+.iconcart{
+  width: 40px;
+  height: 40px;
+ margin-right: 7px;
+
+}
+
+.iconcart:hover{
+    transform:scale(1.2 ) ;
+    transition: 800ms;
+}
