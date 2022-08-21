@@ -69,7 +69,7 @@ export default function Home() {
     //     item?.name?.toLowerCase()?.includes(val.toLowerCase())
     //   )
     // );
-  };
+  };    
 
   const onSubmitSearch = () => {
     handleCallApi(search, brand, price);

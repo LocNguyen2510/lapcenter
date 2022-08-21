@@ -41,10 +41,10 @@ export default function ProductDetail() {
   const navigate = useNavigate();
   const [productsBrand, setProductsBrand] = useState();
   const [loading, setLoading] = useState(true);
-  console.log("productId", state.id);
-  console.log("productBrand:", state.brand);
   const [modalConfirm, setModalConfirm] = React.useState(false);
   const [message, setMessage] = useState();
+  console.log("productId", state.id);
+  console.log("productBrand:", state.brand);
   const getProductId = () => {  
     setLoading(true);
     axios
@@ -89,7 +89,7 @@ export default function ProductDetail() {
   const handleAddCarts = () => {
     setLoading(true);
     axios
-      .post("https://lap-center-v1.herokuapp.com/api/cart/addProductToCart", {
+      .get("https://lap-center-v1.herokuapp.com/api/cart/62dbfbc3789cbe002399ac8b", {
         userId: userId,
         productId: product._id,
         productName:product.name,

@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Navbar from "../../components/navbar";
 import "./styles.scss";
 import iconCart from "../../assets/imgs/cart.png";
 import iconDelete from "../../assets/imgs/delete.png";
 const customerName = localStorage.getItem("customerName");
+// const [loading, setLoading] = useState(true);
+// const userId = localStorage.getItem("userId");
+// const [product, setProduct] = useState();
+// const [image, setImage] = useState("");
+
+// const fetchAPI = () => {
+//   setLoading(true);
+//   axios
+//     .get('https://ap-center.herokuapp.com/api/cart'),{
+//       userId: userId,
+//       productId: product._id,
+//       productName:product.name,
+//       productBrand: product.brand,
+//       image:image,
+//       price: product.price,
+//     }
+//     .then(function (response) {
+//       // handle success
+//       const data = response.data.products;
+//       console.log("Histories: ", data);
+//       setData(data);
+//       setLoading(false);
+//     })
+//     .catch(function (error) {
+//       // handle error
+//       console.log(error);
+//     });
+// };
 const fakedata = [
   {
     _id: "6257c89d462518002330074f",
