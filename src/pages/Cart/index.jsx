@@ -4,35 +4,10 @@ import Navbar from "../../components/navbar";
 import "./styles.scss";
 import iconCart from "../../assets/imgs/cart.png";
 import iconDelete from "../../assets/imgs/delete.png";
-const customerName = localStorage.getItem("customerName");
-// const [loading, setLoading] = useState(true);
-// const userId = localStorage.getItem("userId");
-// const [product, setProduct] = useState();
-// const [image, setImage] = useState("");
+import Card from "../../components/card";
+import { Button, Spinner } from "react-bootstrap";
 
-// const fetchAPI = () => {
-//   setLoading(true);
-//   axios
-//     .get('https://ap-center.herokuapp.com/api/cart'),{
-//       userId: userId,
-//       productId: product._id,
-//       productName:product.name,
-//       productBrand: product.brand,
-//       image:image,
-//       price: product.price,
-//     }
-//     .then(function (response) {
-//       // handle success
-//       const data = response.data.products;
-//       console.log("Histories: ", data);
-//       setData(data);
-//       setLoading(false);
-//     })
-//     .catch(function (error) {
-//       // handle error
-//       console.log(error);
-//     });
-// };
+
 const fakedata = [
   {
     _id: "6257c89d462518002330074f",
@@ -60,12 +35,52 @@ const fakedata = [
   },
 ];
 const MyCarts = () => {
+  const customerName = localStorage.getItem("customerName");
+  const userId = localStorage.getItem("userId");
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const fetchAPI = () => {
+    setLoading(true);
+    axios
+      .get(`https://lap-center.herokuapp.com/api/cart/${userId}`)
+      .then(function (response) {
+        // handle success
+        const data = response.data.products;
+        console.log("Carts: ", data);
+        setData(data);
+        setLoading(false);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  };
+  const handleDelete=(cartID)=>{
+    setLoading(true);
+    console.log(cartID)
+    axios.delete(`https://lap-center-v1.herokuapp.com/api/cart/removeCartInCart/${cartID}`)
+      .then(function (response) {
+        
+        // handle success
+        setLoading(false);
+        fetchAPI()
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  }
+  useEffect(() => {
+    fetchAPI();
+  }, []);
   return (
     <>
       <Navbar />
+      {!loading ? (
       <div className="containerMyCarts">
         <div className="title">
-        <span className="h3">Giỏ hàng của</span> <span className="h3 text-success fw-bold">{customerName}</span>
+          <span className="h3">Giỏ hàng của</span>{" "}
+          <span className="h3 text-success fw-bold">{customerName}</span>
         </div>
         <div className="d-flex tb-header rounded-top fw-bold text-light ">
           <p className="tbh-img">Hình ảnh</p>
@@ -83,25 +98,33 @@ const MyCarts = () => {
           <p className="tbh-actions">Hành động</p>
         </div> */}
         {/* LOOP DATA */}
-        {fakedata.map((item) => (
+        {data.map((item) => (
           <div className="d-flex tb-body fw-bold border-top-0">
             <img className="tbb-img" src={item.image}></img>
             <p className="tbh-name mt-4">{item.productName}</p>
             <p className="tbh-brand mt-4">{item.productBrand}</p>
             <p className="tbh-price mt-4">{item.price} VND</p>
             <div className="tbh-actions">
-                <div className="tbbcart d-flex">
-              <div className="bg-icon">
-                <img className="iconcart mt-2 " src={iconCart}></img>
+              <div className="tbbcart d-flex">
+                <div className="bg-icon" >
+                  <img className="iconcart mt-2 " src={iconCart}></img>
+                </div>
+                <div className="bg-icon">
+                  <img className="iconcart mt-2" onClick={()=>handleDelete(item._id)} src={iconDelete}></img>
+                </div>
               </div>
-              <div className="bg-icon">
-                <img className="iconcart mt-2" src={iconDelete}></img>
-              </div>
-            </div>
             </div>
           </div>
         ))}
-      </div>
+        {data.length ==0 && <div className="text-center mt-2">
+          <p>Không có sản phẩm nào trong giỏ hàng!</p></div>}
+      </div>): (
+          <div className="spin ">
+            <Spinner animation="grow" variant="danger" />
+            <Spinner animation="grow" variant="warning" />
+            <Spinner animation="grow" variant="info" />
+          </div>
+        )}
     </>
   );
 };

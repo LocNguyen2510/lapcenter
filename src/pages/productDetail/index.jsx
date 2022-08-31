@@ -89,7 +89,7 @@ export default function ProductDetail() {
   const handleAddCarts = () => {
     setLoading(true);
     axios
-      .get("https://lap-center-v1.herokuapp.com/api/cart/62dbfbc3789cbe002399ac8b", {
+      .post("https://lap-center-v1.herokuapp.com/api/cart/addProductToCart", {
         userId: userId,
         productId: product._id,
         productName:product.name,
