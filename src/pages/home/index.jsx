@@ -5,6 +5,8 @@ import Card from "../../components/card";
 import { data } from "../../data";
 import { Form, Button, Spinner } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
+import iconCart from "../../assets/imgs/cart.png";
+import MyCart from "../../components/MyCartandHistory";
 import "./styles.scss";
 export default function Home() {
   const [list, setList] = useState([]);
@@ -208,8 +210,13 @@ export default function Home() {
   };
   // }
   return (
+
     <div className="homecontainer">
       <Navbar />
+        {  customerName &&
+          
+            <MyCart/>
+          }
       <div className="content">
         <div className="menu_top">
           <Form.Label htmlFor="inputPassword5"></Form.Label>

@@ -2,8 +2,10 @@
   padding-top: 75px;
   width: 80%;
   margin: 0 auto;
+  margin-left: 350px;
   .title{
     text-align: center;
+    margin-left: -320px;
     padding-bottom: 15px;
   }
   .tb-header {
@@ -63,4 +65,9 @@
 .iconcart:hover{
     transform:scale(1.2 ) ;
     transition: 800ms;
+}
+.spin{
+  text-align: center;
+  margin-left: -70px;
+
 }
