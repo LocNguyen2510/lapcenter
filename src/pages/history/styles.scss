@@ -1,0 +1,64 @@
+.containerMyHistory {
+    padding-top: 75px;
+    width: 80%;
+    margin: 0 auto;
+    margin-left: 350px;
+    .title{
+      text-align: center;
+      margin-left: -320px;
+      padding-bottom: 15px;
+    }
+    .tb-header {
+      max-width: 1228px;
+      min-width: 600px;
+      background: rgb(113, 170, 188) !important;
+      justify-content: space-between;
+      padding: 5px 10px 0 10px;
+      border: solid 1px rgb(128, 120, 120);
+  }
+  .tbh-img {
+    max-width: 128px;
+    min-width: 100px;
+    text-align: center;
+  
+  }
+  .tbh-name {
+    text-align: center;
+    // max-width: 400px;
+    width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
+  .tbh-brand {
+    max-width: 230px;
+    min-width: 200;
+  }
+  .tbh-price {
+    max-width: 230px;
+    min-width: 200px;
+    text-align: center;
+  }
+
+  .tb-body {
+      max-width: 1228px;
+      min-width: 600px;
+      justify-content: space-between;
+      padding: 5px 10px 0 10px;
+      border: solid 1px rgb(128, 120, 120);
+      
+  }
+  .tbb-img {
+      width: 90px;
+      height: 70px;
+    }
+  }
+  .spin{
+    text-align: center;
+    margin-left: -70px;
+  
+  }
+  .tbb-name:hover {
+    text-align: center;
+    width: 400px;
+}

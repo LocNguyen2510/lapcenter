@@ -6,6 +6,7 @@ import iconCart from "../../assets/imgs/cart.png";
 import iconDelete from "../../assets/imgs/delete.png";
 import Card from "../../components/card";
 import { Button, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 
 const fakedata = [
@@ -35,6 +36,7 @@ const fakedata = [
   },
 ];
 const MyCarts = () => {
+  const navigate =useNavigate();
   const customerName = localStorage.getItem("customerName");
   const userId = localStorage.getItem("userId");
   const [data, setData] = useState([]);
@@ -107,7 +109,7 @@ const MyCarts = () => {
             <div className="tbh-actions">
               <div className="tbbcart d-flex">
                 <div className="bg-icon" >
-                  <img className="iconcart mt-2 " src={iconCart}></img>
+                  <img className="iconcart mt-2 " onClick={()=>navigate(`/buy/${item.productId} `,{state:{ id:item.productId}})} src={iconCart}></img>
                 </div>
                 <div className="bg-icon">
                   <img className="iconcart mt-2" onClick={()=>handleDelete(item._id)} src={iconDelete}></img>
