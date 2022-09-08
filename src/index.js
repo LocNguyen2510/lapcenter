@@ -17,6 +17,7 @@ import About from './pages/about';
 import Login from './pages/login';
 import Register from './pages/register';
 import MyCarts from './pages/Cart';
+import MyHistory from './pages/history';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -30,6 +31,8 @@ root.render(
         <Route path="/product/:productId" element={<ProductDetail />} />
         <Route path="buy/:productId" element={<Buynow />} />
         <Route path="/myCarts" element={<MyCarts />} />
+        <Route path="/myHistory"element={<MyHistory />} />
+
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
