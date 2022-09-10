@@ -16,9 +16,12 @@ import Home from './pages/home';
 import About from './pages/about';
 import Login from './pages/login';
 import Register from './pages/register';
+import PageNotFound from './pages/pageNotFound';
 import MyCarts from './pages/Cart';
 import MyHistory from './pages/history';
+import Orders from './pages/Admin/Order';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const isAdmin = localStorage.getItem("isAdmin");
 root.render(
   <React.StrictMode>
 
@@ -32,6 +35,12 @@ root.render(
         <Route path="buy/:productId" element={<Buynow />} />
         <Route path="/myCarts" element={<MyCarts />} />
         <Route path="/myHistory"element={<MyHistory />} />
+        <Route path="/*"element={<PageNotFound />} />
+
+{
+  isAdmin === "true" && 
+  <Route path="/Order"element={<Orders />} />
+}
 
       </Routes>
     </BrowserRouter>
